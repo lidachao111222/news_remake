@@ -23,4 +23,20 @@ let router = new VueRouter({
   }]
 })
 
+// 设置路由守卫
+router.beforeEach((to, from, next) => {
+  console.log(to)
+  if (to.path.indexOf('/user') === 0) {
+    if (localStorage.getItem('user_token')) {
+      next()
+    } else {
+      next({
+        path: '/login'
+      })
+    }
+  } else {
+    next()
+  }
+})
+
 export default router
