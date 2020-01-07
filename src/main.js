@@ -16,10 +16,11 @@ import {
   CellGroup,
   NavBar,
   Uploader,
-  Dialog
+  Dialog,
+  Picker
 } from 'vant'
 
-Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader).use(Dialog)
+Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader).use(Dialog).use(Picker)
 
 Vue.config.productionTip = false
 

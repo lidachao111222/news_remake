@@ -27,7 +27,12 @@
       <van-field placeholder="请输入老密码" required label="老密码" ref="oldpassword" />
       <van-field placeholder="请输入新密码" required label="新密码" ref="newpassword" />
     </van-dialog>
-    <van-cell title="性别" :value="userinfo.gender === 0 ? '女':'男'" is-link />
+
+    <van-cell title="性别" :value="userinfo.gender === 0 ? '女':'男'" is-link    @click="gendershow=!gendershow"/>
+    <!-- 性别的dialog -->
+    <van-dialog v-model="gendershow" title="性别" show-cancel-button @confirm="updategender">
+      <van-picker :columns="columns"  @change="onChange" :default-index="userinfo.gender"/>
+    </van-dialog>
   </div>
 </template>
 
@@ -40,7 +45,10 @@ export default {
     return {
       userinfo: '',
       nickshow: false,
-      passwordshow: false
+      passwordshow: false,
+      gendershow: false,
+      columns: ['女', '男'],
+      index: ''
     }
   },
   methods: {
@@ -108,6 +116,24 @@ export default {
           this.$toast.success('修改成功')
         }
       }
+    },
+    // 更新性别
+    async updategender () {
+      // axios修改请求
+      let res = await updateinfo(this.$route.params.id, {
+        gender: this.index
+      })
+      // console.log(res)
+      if (res.data.message === '修改成功') {
+        // this.userinfo.gender = res.data.data.nickname
+        console.log(res)
+        this.$toast.success(res.data.message)
+        this.userinfo.gender = JSON.parse(res.config.data).gender
+      }
+    },
+    onChange (picker, value, index) {
+      console.log(index)
+      this.index = index
     }
   },
   // 使用mounter方法调用axios取回数据进行渲染
