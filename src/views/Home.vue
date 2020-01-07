@@ -16,10 +16,7 @@
     <!-- 标签页 -->
     <div class="nav">
       <van-tabs v-model="active">
-        <van-tab title="标签 1">内容 1</van-tab>
-        <van-tab title="标签 2">内容 2</van-tab>
-        <van-tab title="标签 3">内容 3</van-tab>
-        <van-tab title="标签 4">内容 4</van-tab>
+        <van-tab :title="item.name" v-for="item in categorylist" :key="item.id">内容 1</van-tab>
       </van-tabs>
     </div>
     <!-- 新闻列表 -->
@@ -28,20 +25,25 @@
 </template>
 
 <script>
+// 引入路由
 import router from '../ulits/router'
+
+// 引入api
+import { category } from '../apis/article'
 export default {
   data () {
     return {
       id: '',
+      categorylist: [],
       active: localStorage.getItem('user_token') === null ? 0 : 1
     }
   },
   methods: {
     gohomepage () {
-    // 提取id
+      // 提取id
       let id = localStorage.getItem('user_info')
       // 如果id存在时候时，跳转
-      console.log(id)
+      //   console.log(id)
       if (id) {
         id = JSON.parse(localStorage.getItem('user_info')).id
         this.id = id
@@ -50,6 +52,22 @@ export default {
         router.push({ path: `/user/${this.id}` })
       }
     }
+  },
+  async mounted () {
+    let res = await category()
+    // 取回栏目列表数据，并且准备渲染
+    this.categorylist = res.data.data
+    // console.log(this.categorylist)
+    // 重新改造categorylist
+    this.categorylist = this.categorylist.map((element) => {
+      return {
+        ...element,
+        pageSize: 5,
+        pageIndex: 1,
+        newslist: []
+      }
+    })
+    console.log(this.categorylist)
   }
 }
 </script>
