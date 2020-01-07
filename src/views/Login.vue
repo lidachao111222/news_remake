@@ -8,8 +8,8 @@
         <span class="iconfont iconnew"></span>
       </div>
       <div class="inputs">
-        <van-field v-model="user.username" placeholder="请输入用户名" />
-        <van-field v-model="user.password" type="password" placeholder="请输入密码"/>
+        <van-field v-model="user.username" placeholder="请输入用户名" @blur="ckeck1" />
+        <van-field v-model="user.password" type="password" placeholder="请输入密码" @blur="ckeck2" />
       </div>
       <br />
       <p class="tips">
@@ -31,9 +31,23 @@ export default {
       }
     }
   },
+  // 方法集合
   methods: {
+    // 登录方法
     login () {
       console.log(this.user)
+    },
+    // 失焦检验用户名格式方法
+    ckeck1 () {
+      if (!(/^\d{4,11}$/.test(this.user.username))) {
+        this.$toast.fail('用户名格式不对')
+      }
+    },
+    // 失焦检验密码格式方法
+    ckeck2 () {
+      if (!(/^\d{3,11}$/.test(this.user.username))) {
+        this.$toast.fail('密码格式不对')
+      }
     }
   }
 }
