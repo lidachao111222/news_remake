@@ -14,7 +14,14 @@
       </div>
     </div>
     <!-- 标签页 -->
-    <div class="nav"></div>
+    <div class="nav">
+      <van-tabs v-model="active">
+        <van-tab title="标签 1">内容 1</van-tab>
+        <van-tab title="标签 2">内容 2</van-tab>
+        <van-tab title="标签 3">内容 3</van-tab>
+        <van-tab title="标签 4">内容 4</van-tab>
+      </van-tabs>
+    </div>
     <!-- 新闻列表 -->
     <div class="newsList"></div>
   </div>
@@ -25,12 +32,23 @@ import router from '../ulits/router'
 export default {
   data () {
     return {
-      id: JSON.parse(localStorage.getItem('user_info')).id
+      id: '',
+      active: localStorage.getItem('user_token') === null ? 0 : 1
     }
   },
   methods: {
     gohomepage () {
-      router.push({ path: `/user/${this.id}` })
+    // 提取id
+      let id = localStorage.getItem('user_info')
+      // 如果id存在时候时，跳转
+      console.log(id)
+      if (id) {
+        id = JSON.parse(localStorage.getItem('user_info')).id
+        this.id = id
+        router.push({ path: `/user/${this.id}` })
+      } else {
+        router.push({ path: `/user/${this.id}` })
+      }
     }
   }
 }

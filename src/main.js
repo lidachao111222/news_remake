@@ -18,10 +18,12 @@ import {
   Uploader,
   Dialog,
   Picker,
-  Icon
+  Icon,
+  Tab,
+  Tabs
 } from 'vant'
 
-Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader).use(Dialog).use(Picker).use(Icon)
+Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader).use(Dialog).use(Picker).use(Icon).use(Tab).use(Tabs)
 
 Vue.config.productionTip = false
 
