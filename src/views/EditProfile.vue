@@ -5,8 +5,18 @@
     <div id="img">
       <img :src="'http://127.0.0.1:3000'+userinfo.head_img" alt />
     </div>
-    <van-cell title="昵称" :value="userinfo.nickname" is-link />
-    <van-cell title="密码" :value="userinfo.password" is-link />
+    <van-cell title="昵称" :value="userinfo.nickname" is-link @click="nickshow=!nickshow" />
+    <!-- 昵称的dialog -->
+    <van-dialog v-model="nickshow" title="昵称" show-cancel-button @confirm="updatenickname">
+      <van-field
+        :value="userinfo.nickname"
+        placeholder="请输入用户名"
+        required
+        label="用户名"
+        ref="nickname"
+      />
+    </van-dialog>
+    <van-cell title="密码" :value=" typeof userinfo.password === 'number' ?'无法显示':'****'" is-link />
     <van-cell title="性别" :value="userinfo.gender === 0 ? '女':'男'" is-link />
   </div>
 </template>
@@ -18,7 +28,8 @@ import { upload } from '../apis/upload'
 export default {
   data () {
     return {
-      userinfo: ''
+      userinfo: '',
+      nickshow: false
     }
   },
   methods: {
@@ -49,6 +60,20 @@ export default {
         this.$toast.success(res2.data.message)
       } else {
         this.$toast.fail('文件上传失败')
+      }
+    },
+    // 更新用户名
+    async updatenickname () {
+      // console.log(213)
+      // console.log(this.$refs.nickname.$refs.input.value)
+      // console.log(this.userinfo.nickname)
+      // 调用axios请求
+      let res = updateinfo(this.$route.params.id, {
+        nickname: this.$refs.nickname.$refs.input.value
+      })
+      if (res) {
+        this.$toast.success('修改成功')
+        this.userinfo.nickname = this.$refs.nickname.$refs.input.value
       }
     }
   },

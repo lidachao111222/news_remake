@@ -15,10 +15,11 @@ import {
   Cell,
   CellGroup,
   NavBar,
-  Uploader
+  Uploader,
+  Dialog
 } from 'vant'
 
-Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader)
+Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader).use(Dialog)
 
 Vue.config.productionTip = false
 
