@@ -8,15 +8,16 @@
         <span class="iconfont iconnew"></span>
       </div>
       <div class="inputs">
-        <van-field v-model="user.username" placeholder="请输入用户名" />
-        <van-field v-model="user.password" type="password" placeholder="请输入密码"/>
+        <van-field v-model="user.username" placeholder="请输入用户名/手机号码"  />
+        <van-field v-model="user.nickname" placeholder="昵称"  />
+        <van-field v-model="user.password" type="password" placeholder="密码" />
       </div>
       <br />
       <p class="tips">
         没有账号？
-        <a href="#/register" class>去注册</a>
+        <a href="#/login" class>去登录</a>
       </p>
-      <van-button type="danger" size="large" @click="login">登录</van-button>
+      <van-button type="danger" size="large" @click="login">注册</van-button>
     </div>
   </div>
 </template>
@@ -27,7 +28,8 @@ export default {
     return {
       user: {
         username: '',
-        password: ''
+        password: '',
+        nickname: ''
       }
     }
   },
