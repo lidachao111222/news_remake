@@ -18,6 +18,8 @@
     <van-cell title="我的跟帖" value="跟帖/回复" is-link />
     <van-cell title="我的收藏" value="文章/视频" is-link />
     <van-cell title="设置" is-link />
+    <van-button type="primary" size="large" @click="gohome">回到主页</van-button>
+    <van-button type="danger" size="large" @click="logout">退出</van-button>
   </div>
 </template>
 
@@ -35,7 +37,15 @@ export default {
     let res = await userdata(this.$route.params.id)
     if (res.data.message === '获取成功') {
       this.userinfo = res.data.data
-    //   console.log(this.userinfo)
+      //   console.log(this.userinfo)
+    }
+  },
+  methods: {
+    gohome () {
+      console.log(123)
+    },
+    logout () {
+      console.log(321)
     }
   }
 }
