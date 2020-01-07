@@ -13,7 +13,7 @@
 
 <script>
 // 引入axios
-import { userdata } from '../apis/login'
+import { userdata, updateinfo } from '../apis/login'
 import { upload } from '../apis/upload'
 export default {
   data () {
@@ -35,12 +35,18 @@ export default {
       formdata.append('file', file.file)
       // 使用axios请求上传图片
       let res = await upload(formdata)
-      console.log(res)
+      // console.log(res)
       if (res.data.message === '文件上传成功') {
-        // 如果成功，有提示
-        this.$toast.success(res.data.message)
         // 替换照片（数据库还没有替换）
         this.userinfo.head_img = res.data.data.url
+
+        // axios请求，更新后台图片路径
+        let res2 = await updateinfo(this.$route.params.id, {
+          head_img: res.data.data.url
+        })
+        // console.log(res2)
+        // 如果成功，有提示
+        this.$toast.success(res2.data.message)
       } else {
         this.$toast.fail('文件上传失败')
       }
@@ -51,7 +57,7 @@ export default {
     let res = await userdata(this.$route.params.id)
     if (res.data.message === '获取成功') {
       this.userinfo = res.data.data
-      console.log(this.userinfo)
+      // console.log(this.userinfo)
     }
   }
 }
