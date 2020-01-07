@@ -23,7 +23,7 @@
 
 <script>
 // 引入axios api
-import { login } from '../apis//login'
+import { login } from '../apis/login'
 // 引入router
 import router from '../ulits/router'
 
