@@ -13,10 +13,11 @@ import {
   Field,
   Toast,
   Cell,
-  CellGroup
+  CellGroup,
+  NavBar
 } from 'vant'
 
-Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup)
+Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar)
 
 Vue.config.productionTip = false
 

@@ -35,7 +35,7 @@ export default {
     let res = await userdata(this.$route.params.id)
     if (res.data.message === '获取成功') {
       this.userinfo = res.data.data
-      console.log(this.userinfo)
+    //   console.log(this.userinfo)
     }
   }
 }
