@@ -16,7 +16,17 @@
         ref="nickname"
       />
     </van-dialog>
-    <van-cell title="密码" :value=" typeof userinfo.password === 'number' ?'无法显示':'****'" is-link />
+    <van-cell
+      title="密码"
+      :value=" typeof userinfo.password === 'number' ?'无法显示':'****'"
+      is-link
+      @click="passwordshow=!passwordshow"
+    />
+    <!-- 密码的dialog -->
+    <van-dialog v-model="passwordshow" title="密码" show-cancel-button @confirm="updatepassword">
+      <van-field placeholder="请输入老密码" required label="老密码" ref="oldpassword" />
+      <van-field placeholder="请输入新密码" required label="新密码" ref="newpassword" />
+    </van-dialog>
     <van-cell title="性别" :value="userinfo.gender === 0 ? '女':'男'" is-link />
   </div>
 </template>
@@ -29,7 +39,8 @@ export default {
   data () {
     return {
       userinfo: '',
-      nickshow: false
+      nickshow: false,
+      passwordshow: false
     }
   },
   methods: {
@@ -68,12 +79,34 @@ export default {
       // console.log(this.$refs.nickname.$refs.input.value)
       // console.log(this.userinfo.nickname)
       // 调用axios请求
-      let res = updateinfo(this.$route.params.id, {
+      let res = await updateinfo(this.$route.params.id, {
         nickname: this.$refs.nickname.$refs.input.value
       })
-      if (res) {
-        this.$toast.success('修改成功')
-        this.userinfo.nickname = this.$refs.nickname.$refs.input.value
+      // console.log(res)
+      if (res.data.message === '修改成功') {
+        this.userinfo.nickname = res.data.data.nickname
+        // console.log(this.userinfo.nickname)
+        // console.log(this.$refs.nickname.$refs.input.value)
+        this.$toast.success(res.data.message)
+      }
+    },
+    // 更新密码
+    async updatepassword () {
+      // console.log(this.$refs.oldpassword.$refs.input.value)
+      // console.log(this.$refs.newpassword.$refs.input.value)
+      // 判断输入的密码是否是老密码, 如果不是，请求再输入一次
+      if (this.$refs.oldpassword.$refs.input.value !== this.userinfo.password) {
+        this.$toast.fail('输入的老密码不对')
+      } else {
+        // 这里不正则判断了
+        // axios请求
+        let res = await updateinfo(this.$route.params.id, {
+          password: this.$refs.newpassword.$refs.input.value
+        })
+        if (res.data.message === '修改成功') {
+          this.userinfo.password = JSON.parse(res.config.data).password
+          this.$toast.success('修改成功')
+        }
       }
     }
   },
