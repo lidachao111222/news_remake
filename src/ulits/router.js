@@ -8,6 +8,9 @@ import register from '../views/Register.vue'
 // 引入用户页面
 import user from '../views/User.vue'
 
+// 引入editprofile页面
+import editprofile from '../views/EditProfile.vue'
+
 Vue.use(VueRouter)
 
 let router = new VueRouter({
@@ -20,6 +23,9 @@ let router = new VueRouter({
   }, {
     path: '/user/:id',
     component: user
+  }, {
+    path: '/editprofile/:id',
+    component: editprofile
   }]
 })
 
