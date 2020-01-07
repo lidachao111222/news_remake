@@ -15,7 +15,7 @@
         没有账号？
         <a href="#/register" class>去注册</a>
       </p>
-      <div data-v-4bc01e24 class="button">登录按钮</div>
+      <van-button type="danger">危险按钮</van-button>
     </div>
   </div>
 </template>

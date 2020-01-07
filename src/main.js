@@ -7,6 +7,11 @@ import router from '../src/ulits/router'
 // 引入css初始化样式
 import './style/reset.css'
 
+// 引入vant组件
+import { Button } from 'vant'
+
+Vue.use(Button)
+
 Vue.config.productionTip = false
 
 new Vue({
