@@ -11,6 +11,9 @@ import user from '../views/User.vue'
 // 引入editprofile页面
 import editprofile from '../views/EditProfile.vue'
 
+// 引入home页面
+import home from '../views/Home.vue'
+
 Vue.use(VueRouter)
 
 let router = new VueRouter({
@@ -26,6 +29,9 @@ let router = new VueRouter({
   }, {
     path: '/editprofile/:id',
     component: editprofile
+  }, {
+    path: '/home',
+    component: home
   }]
 })
 

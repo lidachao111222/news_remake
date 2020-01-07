@@ -26,6 +26,8 @@
 <script>
 // 引入axios
 import { userdata } from '../apis/login'
+// 引入router
+import router from '../ulits/router'
 export default {
   data () {
     return {
@@ -43,9 +45,13 @@ export default {
   methods: {
     gohome () {
       console.log(123)
+      router.push({ path: `/home` })
     },
     logout () {
       console.log(321)
+      localStorage.removeItem('user_token')
+      localStorage.removeItem('user_info')
+      router.push({ path: `/home` })
     }
   }
 }
