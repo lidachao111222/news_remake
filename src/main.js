@@ -8,9 +8,9 @@ import router from '../src/ulits/router'
 import './style/reset.css'
 
 // 引入vant组件
-import { Button } from 'vant'
+import { Button, Field } from 'vant'
 
-Vue.use(Button)
+Vue.use(Button).use(Field)
 
 Vue.config.productionTip = false
 

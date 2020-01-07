@@ -8,20 +8,35 @@
         <span class="iconfont iconnew"></span>
       </div>
       <div class="inputs">
-        <input data-v-744880be placeholder="请输入手机号" class="input" />
-        <input data-v-744880be placeholder="密码" class="input" type="password" />
+        <van-field v-model="user.name" placeholder="请输入用户名" :border="true" />
+        <van-field v-model="user.password" type="password" placeholder="请输入密码" :border="true" />
       </div>
+      <br />
       <p class="tips">
         没有账号？
         <a href="#/register" class>去注册</a>
       </p>
-      <van-button type="danger">危险按钮</van-button>
+      <van-button type="danger" size="large" @click="login">登录</van-button>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      user: {
+        name: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    login () {
+      console.log(this.user)
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -59,5 +74,18 @@ export default {}
   a {
     color: #3385ff;
   }
+}
+
+.van-cell:not(:last-child)::after {
+  border-bottom: none;
+}
+
+.van-cell {
+  border-bottom: none;
+  border-bottom: 2px solid #ebedf0;
+}
+
+button {
+  border-radius: 20px;
 }
 </style>
