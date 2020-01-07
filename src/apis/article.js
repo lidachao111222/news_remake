@@ -6,3 +6,11 @@ export const category = () => {
     url: '/category'
   })
 }
+
+export const articlelist = (params) => {
+  return axios({
+    method: 'get',
+    url: '/post',
+    params
+  })
+}

@@ -29,7 +29,7 @@
 import router from '../ulits/router'
 
 // 引入api
-import { category } from '../apis/article'
+import { category, articlelist } from '../apis/article'
 export default {
   data () {
     return {
@@ -51,6 +51,16 @@ export default {
       } else {
         router.push({ path: `/user/${this.id}` })
       }
+    },
+    async init () {
+      // 发送axios请求得到文章列表
+      let res1 = await articlelist({
+        pageIndex: this.categorylist[this.active].pageIndex,
+        pageSize: this.categorylist[this.active].pageSize,
+        category: this.categorylist[this.active].id
+      })
+      // 存回原来的对应栏目的数组中
+      this.categorylist[this.active].newslist = res1.data.data
     }
   },
   async mounted () {
@@ -59,7 +69,7 @@ export default {
     this.categorylist = res.data.data
     // console.log(this.categorylist)
     // 重新改造categorylist
-    this.categorylist = this.categorylist.map((element) => {
+    this.categorylist = this.categorylist.map(element => {
       return {
         ...element,
         pageSize: 5,
@@ -67,7 +77,23 @@ export default {
         newslist: []
       }
     })
+    // console.log(this.categorylist)
+    // console.log(this.categorylist[this.active].id)
+    this.init()
     console.log(this.categorylist)
+  },
+  watch: {
+    active: function (currentactive) {
+      this.active = currentactive
+      //   console.log(this.active)
+      // 的到文章列表的id
+      //   console.log(this.categorylist[this.active].id)
+      //  调用方法取回文章列表
+      if (this.categorylist[this.active].newslist.length === 0) {
+        this.init()
+      }
+      console.log(this.categorylist)
+    }
   }
 }
 </script>
