@@ -22,6 +22,11 @@
 </template>
 
 <script>
+// 引入axios api
+import { login } from '../apis//login'
+// 引入router
+import router from '../ulits/router'
+
 export default {
   data () {
     return {
@@ -34,18 +39,29 @@ export default {
   // 方法集合
   methods: {
     // 登录方法
-    login () {
-      console.log(this.user)
+    async login () {
+      //   console.log(this.user)
+      let res = await login(this.user)
+      //   console.log(res)
+      // 判断登录是否成功
+      if (res.data.message === '登录成功') {
+        localStorage.setItem('user_token', res.data.data.token)
+        localStorage.setItem('user_info', JSON.stringify(res.data.data.user))
+        // 准备进行跳转
+        router.push({ path: `/user/${res.data.data.user.id}` })
+      } else {
+        this.$toast.fail(res.data.message)
+      }
     },
     // 失焦检验用户名格式方法
     ckeck1 () {
-      if (!(/^\d{4,11}$/.test(this.user.username))) {
+      if (!/^\d{4,11}$/.test(this.user.username)) {
         this.$toast.fail('用户名格式不对')
       }
     },
     // 失焦检验密码格式方法
     ckeck2 () {
-      if (!(/^\d{3,11}$/.test(this.user.username))) {
+      if (!/^\d{3,11}$/.test(this.user.username)) {
         this.$toast.fail('密码格式不对')
       }
     }
