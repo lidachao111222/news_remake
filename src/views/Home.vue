@@ -91,8 +91,8 @@ export default {
       //  调用方法取回文章列表
       if (this.categorylist[this.active].newslist.length === 0) {
         this.init()
+        console.log(this.categorylist)
       }
-      console.log(this.categorylist)
     }
   }
 }

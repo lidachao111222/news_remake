@@ -87,14 +87,25 @@ export default {
       // console.log(this.$refs.nickname.$refs.input.value)
       // console.log(this.userinfo.nickname)
       // 调用axios请求
+
+      let newname = this.$refs.nickname.$refs.input.value
+      console.log(this.$refs.nickname.$refs.input.value)
       let res = await updateinfo(this.$route.params.id, {
         nickname: this.$refs.nickname.$refs.input.value
       })
+      // console.log(res.data.message)
+      // console.log(newname)
+      // console.log(112)
+      console.log(this.$refs.nickname.$refs.input.value)
       // console.log(res)
       if (res.data.message === '修改成功') {
-        this.userinfo.nickname = res.data.data.nickname
         // console.log(this.userinfo.nickname)
         // console.log(this.$refs.nickname.$refs.input.value)
+        // 直接赋值不行
+        // let newname = this.$refs.nickname.$refs.input.value
+        this.userinfo.nickname = newname
+        // 的把服务器传回来的nickname赋值才行
+        // this.userinfo.nickname = res.data.data.nickname
         this.$toast.success(res.data.message)
       }
     },
@@ -112,6 +123,9 @@ export default {
           password: this.$refs.newpassword.$refs.input.value
         })
         if (res.data.message === '修改成功') {
+          // 直接赋值失败
+          // this.userinfo.password = this.$refs.newpassword.$refs.input.value
+          // 的把服务器传回来的密码赋值才行
           this.userinfo.password = JSON.parse(res.config.data).password
           this.$toast.success('修改成功')
         }
@@ -126,13 +140,13 @@ export default {
       // console.log(res)
       if (res.data.message === '修改成功') {
         // this.userinfo.gender = res.data.data.nickname
-        console.log(res)
+        // console.log(res)
         this.$toast.success(res.data.message)
         this.userinfo.gender = JSON.parse(res.config.data).gender
       }
     },
     onChange (picker, value, index) {
-      console.log(index)
+      // console.log(index)
       this.index = index
     }
   },
