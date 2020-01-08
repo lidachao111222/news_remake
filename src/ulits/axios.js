@@ -1,6 +1,8 @@
 // import Vue from 'vue'
 import axios from 'axios'
 
+import router from '../ulits/router'
+
 axios.defaults.baseURL = 'http://localhost:3000'
 
 // 设置header
@@ -19,7 +21,10 @@ axios.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
-  // 对响应数据做点什么
+  console.log(response.data.message === '用户信息验证失败')
+  if (response.data.message === '用户信息验证失败') {
+    router.push({ path: `/login` })
+  }
   return response
 }, function (error) {
   // 对响应错误做点什么

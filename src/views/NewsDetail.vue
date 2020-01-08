@@ -57,21 +57,22 @@ export default {
     // console.log(this.$route.params.id)
     let res = await articldetail(this.$route.params.id)
     this.data = res.data.data
-    console.log(this.data.has_follow)
+    console.log(this.data)
   },
   methods: {
     // 关注作者
     async likeuser () {
     //   console.log(123)
+      // 从localstorage中得到用户id
       // 发送axios请求
       if (this.data.has_follow) {
         // 如果已关注 则请求不关注
-        let res1 = await unfollow(this.$route.params.id)
+        let res1 = await unfollow(this.data.user.id)
         console.log(res1)
         this.$toast.fail(res1.data.message)
       } else {
         // 如果未关注 则请求关注
-        let res2 = await follows(this.$route.params.id)
+        let res2 = await follows(this.data.user.id)
         console.log(res2)
         this.$toast.success(res2.data.message)
       }
