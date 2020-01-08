@@ -21,3 +21,17 @@ export const articldetail = (id) => {
     url: `/post/${id}`
   })
 }
+
+export const unfollow = (id) => {
+  return axios({
+    method: 'get',
+    url: `/user_unfollow/${id}`
+  })
+}
+
+export const follows = (id) => {
+  return axios({
+    method: 'get',
+    url: `/user_follows/${id}`
+  })
+}

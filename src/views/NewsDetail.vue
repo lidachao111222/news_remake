@@ -5,19 +5,18 @@
         <van-icon name="arrow-left back" @click="$router.back()" />
         <span class="iconfont iconnew new"></span>
       </div>
-      <span>关注</span>
+      <span @click="likeuser" :class="{bgc: data.has_follow}">{{follow}}</span>
     </div>
     <div class="detail">
       <div class="title">{{data.title}}</div>
       <div class="desc">
-        <span>{{data.user.nickname}}</span> &nbsp;&nbsp;
+        <span>{{data.user && data.user.nickname}}</span> &nbsp;&nbsp;
         <span>2019-9-9</span>
       </div>
-      <div class="content" v-html="data.content">
-      </div>
+      <div class="content" v-html="data.content"></div>
       <div class="opt">
         <span class="like">
-          <van-icon name="good-job-o" />点迁
+          <van-icon name="good-job-o" />点赞
         </span>
         <span class="chat">
           <van-icon name="chat" class="w" />微信
@@ -45,13 +44,12 @@
 
 <script>
 // 引入文章详情api
-import { articldetail } from '../apis/article'
+import { articldetail, unfollow, follows } from '../apis/article'
 export default {
   data () {
     return {
-      data: {
-        user: {}
-      }
+      data: '',
+      follow: '关注'
     }
   },
   async mounted () {
@@ -59,7 +57,27 @@ export default {
     // console.log(this.$route.params.id)
     let res = await articldetail(this.$route.params.id)
     this.data = res.data.data
-    console.log(this.data)
+    console.log(this.data.has_follow)
+  },
+  methods: {
+    // 关注作者
+    async likeuser () {
+    //   console.log(123)
+      // 发送axios请求
+      if (this.data.has_follow) {
+        // 如果已关注 则请求不关注
+        let res1 = await unfollow(this.$route.params.id)
+        console.log(res1)
+        this.$toast.fail(res1.data.message)
+      } else {
+        // 如果未关注 则请求关注
+        let res2 = await follows(this.$route.params.id)
+        console.log(res2)
+        this.$toast.success(res2.data.message)
+      }
+      // 转化样式用的
+      this.data.has_follow = !this.data.has_follow
+    }
   }
 }
 </script>
@@ -88,12 +106,16 @@ export default {
   }
   > span {
     padding: 5px 15px;
-    background-color: #f00;
-    color: #fff;
+    // background-color: #f00;
+    color: #000;
     text-align: center;
     border-radius: 15px;
     font-size: 13px;
   }
+}
+.bgc {
+  background-color: #f00;
+   color: #fff !important;
 }
 .detail {
   padding: 15px;
