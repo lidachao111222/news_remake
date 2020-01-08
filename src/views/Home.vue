@@ -15,8 +15,11 @@
     </div>
     <!-- 标签页 -->
     <div class="nav">
-      <van-tabs v-model="active">
-        <van-tab :title="item.name" v-for="item in categorylist" :key="item.id">内容 1</van-tab>
+      <!-- 顶部tab栏 -->
+      <van-tabs v-model="active" swipeable sticky>
+        <van-tab :title="item.name" v-for="item in categorylist" :key="item.id">
+          <eachnews v-for="item in categorylist[active].newslist" :key="item.id" :data="item"></eachnews>
+        </van-tab>
       </van-tabs>
     </div>
     <!-- 新闻列表 -->
@@ -30,7 +33,15 @@ import router from '../ulits/router'
 
 // 引入api
 import { category, articlelist } from '../apis/article'
+
+// 引入栏目的新闻列表
+import eachnews from '../components/Eachnews'
+
 export default {
+  // 引入栏目的新闻列表
+  components: {
+    eachnews
+  },
   data () {
     return {
       id: '',
@@ -64,6 +75,7 @@ export default {
     }
   },
   async mounted () {
+    // 页面一加载的时候，进行axios数据请求，得到栏目列表并对回传的数据进行改造
     let res = await category()
     // 取回栏目列表数据，并且准备渲染
     this.categorylist = res.data.data
@@ -80,9 +92,11 @@ export default {
     // console.log(this.categorylist)
     // console.log(this.categorylist[this.active].id)
     this.init()
-    console.log(this.categorylist)
+    // console.log(this.categorylist)
   },
+  // watch属性
   watch: {
+    // 侦听器，检查active的值的变化
     active: function (currentactive) {
       this.active = currentactive
       //   console.log(this.active)
@@ -91,7 +105,7 @@ export default {
       //  调用方法取回文章列表
       if (this.categorylist[this.active].newslist.length === 0) {
         this.init()
-        console.log(this.categorylist)
+        // console.log(this.categorylist)
       }
     }
   }

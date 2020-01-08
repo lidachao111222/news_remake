@@ -32,12 +32,16 @@ let router = new VueRouter({
   }, {
     path: '/home',
     component: home
+  }, {
+    path: '/',
+    component: home,
+    redirect: '/home'
   }]
 })
 
 // 设置路由守卫
 router.beforeEach((to, from, next) => {
-//   console.log(to)
+  //   console.log(to)
   if (to.path.indexOf('/user') === 0) {
     if (localStorage.getItem('user_token')) {
       next()
