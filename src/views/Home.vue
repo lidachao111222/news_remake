@@ -18,7 +18,18 @@
       <!-- 顶部tab栏 -->
       <van-tabs v-model="active" swipeable sticky>
         <van-tab :title="item.name" v-for="item in categorylist" :key="item.id">
-          <eachnews v-for="item in categorylist[active].newslist" :key="item.id" :data="item"></eachnews>
+          <!-- List 列表 -->
+          <van-list
+            v-model="categorylist[active].loading"
+            :finished="categorylist[active].finished"
+            finished-text="没有更多了"
+            @load="onLoad"
+            :immediate-check="false"
+            :offset="50"
+          >
+            <!-- 自定义组件 -->
+            <eachnews v-for="item in categorylist[active].newslist" :key="item.id" :data="item"></eachnews>
+          </van-list>
         </van-tab>
       </van-tabs>
     </div>
@@ -70,8 +81,28 @@ export default {
         pageSize: this.categorylist[this.active].pageSize,
         category: this.categorylist[this.active].id
       })
-      // 存回原来的对应栏目的数组中
-      this.categorylist[this.active].newslist = res1.data.data
+      // 如果页面数不为1 把后面取到的数据补回带原来的数据里面
+      if (this.categorylist[this.active].pageIndex === 1) {
+        // 存回原来的对应栏目的数组中
+        this.categorylist[this.active].newslist = res1.data.data
+      } else if (this.categorylist[this.active].pageIndex !== 1) {
+        this.categorylist[this.active].newslist.push(...res1.data.data)
+      }
+      // 如果取回数据的长度不等于pageSize，则表明数据取完了
+      // 加载完成，finished为true，此时不会触发load事件
+      if (res1.data.data.length !== this.categorylist[this.active].pageSize) {
+        this.categorylist[this.active].finished = true
+      } else {
+        // onload事件触发后把当前栏的loding值改回为false
+        this.categorylist[this.active].loading = false
+      }
+    },
+    // List 列表load事件
+    onLoad () {
+      // console.log(123)
+      ++this.categorylist[this.active].pageIndex
+      // console.log(this.categorylist[this.active].pageIndex)
+      this.init()
     }
   },
   async mounted () {
@@ -86,7 +117,9 @@ export default {
         ...element,
         pageSize: 5,
         pageIndex: 1,
-        newslist: []
+        newslist: [],
+        loading: false,
+        finished: false
       }
     })
     // console.log(this.categorylist)

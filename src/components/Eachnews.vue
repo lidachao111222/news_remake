@@ -46,15 +46,7 @@
 
 <script>
 export default {
-  props: ['data'],
-  mounted () {
-    console.log(this.data)
-  },
-  watch: {
-    data (nval) {
-      console.log(nval)
-    }
-  }
+  props: ['data']
 }
 </script>
 
