@@ -15,8 +15,9 @@
       </div>
       <div class="content" v-html="data.content"></div>
       <div class="opt">
-        <span class="like">
-          <van-icon name="good-job-o" />点赞
+        <span class="like" :class="{likecol: data.has_like}" @click="likeit">
+          <van-icon name="good-job-o" />
+          {{like}}
         </span>
         <span class="chat">
           <van-icon name="chat" class="w" />微信
@@ -44,12 +45,13 @@
 
 <script>
 // 引入文章详情api
-import { articldetail, unfollow, follows } from '../apis/article'
+import { articldetail, unfollow, follows, like } from '../apis/article'
 export default {
   data () {
     return {
       data: '',
-      follow: '关注'
+      follow: '关注',
+      like: '点赞'
     }
   },
   async mounted () {
@@ -62,22 +64,32 @@ export default {
   methods: {
     // 关注作者
     async likeuser () {
-    //   console.log(123)
+      //   console.log(123)
       // 从localstorage中得到用户id
       // 发送axios请求
       if (this.data.has_follow) {
         // 如果已关注 则请求不关注
         let res1 = await unfollow(this.data.user.id)
-        console.log(res1)
-        this.$toast.fail(res1.data.message)
+        // console.log(res1)
+        this.$toast.success(res1.data.message)
+        this.follow = '关注'
       } else {
         // 如果未关注 则请求关注
         let res2 = await follows(this.data.user.id)
-        console.log(res2)
+        // console.log(res2)
         this.$toast.success(res2.data.message)
+        this.follow = '已关注'
       }
       // 转化样式用的
       this.data.has_follow = !this.data.has_follow
+    },
+    // 点赞事件
+    async likeit () {
+    //   console.log(this.data.has_like)
+      let res1 = await like(this.data.id)
+      // console.log(res1)
+      this.data.has_like = !this.data.has_like
+      this.$toast.success(res1.data.message)
     }
   }
 }
@@ -116,7 +128,7 @@ export default {
 }
 .bgc {
   background-color: #f00;
-   color: #fff !important;
+  color: #fff !important;
 }
 .detail {
   padding: 15px;
@@ -154,6 +166,10 @@ export default {
   .w {
     color: rgb(84, 163, 5);
   }
+}
+.likecol {
+  background-color: red;
+  color: #fff;
 }
 .keeps {
   border-top: 5px solid #ddd;

@@ -35,3 +35,10 @@ export const follows = (id) => {
     url: `/user_follows/${id}`
   })
 }
+
+export const like = (id) => {
+  return axios({
+    method: 'get',
+    url: `/post_like/${id}`
+  })
+}
