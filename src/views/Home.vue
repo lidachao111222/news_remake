@@ -18,6 +18,9 @@
       <!-- 顶部tab栏 -->
       <van-tabs v-model="active" swipeable sticky>
         <van-tab :title="item.name" v-for="item in categorylist" :key="item.id">
+
+          <!-- PullRefresh 下拉刷新组件 -->
+          <van-pull-refresh v-model="categorylist[active].isLoading" @refresh="onRefresh">
           <!-- List 列表 -->
           <van-list
             v-model="categorylist[active].loading"
@@ -30,6 +33,7 @@
             <!-- 自定义组件 -->
             <eachnews v-for="item in categorylist[active].newslist" :key="item.id" :data="item"></eachnews>
           </van-list>
+          </van-pull-refresh>
         </van-tab>
       </van-tabs>
     </div>
@@ -75,6 +79,12 @@ export default {
       }
     },
     async init () {
+      // 如果isLoading 为true 则说明刷新了，需要进行判断
+      if (this.categorylist[this.active].isLoading) {
+        this.$toast('刷新成功')
+        this.categorylist[this.active].isLoading = false
+        this.categorylist[this.active].pageIndex = 1
+      }
       // 发送axios请求得到文章列表
       let res1 = await articlelist({
         pageIndex: this.categorylist[this.active].pageIndex,
@@ -103,6 +113,13 @@ export default {
       ++this.categorylist[this.active].pageIndex
       // console.log(this.categorylist[this.active].pageIndex)
       this.init()
+    },
+    // 下拉刷新时会触发 refresh 事件
+    onRefresh () {
+      console.log(123)
+      // 把该栏的newlist清空 然后再次请求数据
+      this.categorylist[this.active].newslist = []
+      this.init()
     }
   },
   async mounted () {
@@ -119,7 +136,8 @@ export default {
         pageIndex: 1,
         newslist: [],
         loading: false,
-        finished: false
+        finished: false,
+        isLoading: false
       }
     })
     // console.log(this.categorylist)
