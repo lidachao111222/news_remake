@@ -67,7 +67,7 @@ export default {
   methods: {
     // 自定义组件的click事件
     click (data) {
-      console.log(data)
+      // console.log(data)
       router.push({ path: `/newsdetail/${data}` })
     },
     // 点击用户头像返回到用户也面

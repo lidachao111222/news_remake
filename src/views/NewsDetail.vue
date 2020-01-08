@@ -8,14 +8,12 @@
       <span>关注</span>
     </div>
     <div class="detail">
-      <div class="title">标题</div>
+      <div class="title">{{data.title}}</div>
       <div class="desc">
-        <span>火星人</span> &nbsp;&nbsp;
+        <span>{{data.user.nickname}}</span> &nbsp;&nbsp;
         <span>2019-9-9</span>
       </div>
-      <div class="content">
-        文章的内容：The axios TypeScript definitions have been updated to match the axios API and use the ES2015 module syntax.
-        Please use the following import statement to import axios in TypeScript:
+      <div class="content" v-html="data.content">
       </div>
       <div class="opt">
         <span class="like">
@@ -31,7 +29,7 @@
       <h2>精彩跟帖</h2>
       <div class="item">
         <div class="head">
-          <img src="" alt />
+          <img src alt />
           <div>
             <p>火星网友</p>
             <span>2小时前</span>
@@ -46,9 +44,22 @@
 </template>
 
 <script>
+// 引入文章详情api
+import { articldetail } from '../apis/article'
 export default {
-  mounted () {
-
+  data () {
+    return {
+      data: {
+        user: {}
+      }
+    }
+  },
+  async mounted () {
+    // 利用id 通过axios得到新闻详情
+    // console.log(this.$route.params.id)
+    let res = await articldetail(this.$route.params.id)
+    this.data = res.data.data
+    console.log(this.data)
   }
 }
 </script>
