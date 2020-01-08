@@ -1,6 +1,6 @@
 <template>
   <!-- 一张图片展示 -->
-  <div class="single" v-if="data.type === 1 && data.cover.length === 1 ">
+  <div class="single" v-if="data.type === 1 && data.cover.length === 1" @click="godetail">
     <div class="left">
       <p class="content">{{data.title}}</p>
       <p class="info">
@@ -11,7 +11,7 @@
     <img :src="data.cover[0].url" alt />
   </div>
   <!-- 三张图片展示 -->
-  <div class="singlet" v-else-if="data.type === 1 && data.cover.length === 3 ">
+  <div class="singlet" v-else-if="data.type === 1 && data.cover.length === 3" @click="godetail">
     <div class="left">
       <p class="content">{{data.title}}</p>
       <div class="imgs">
@@ -27,7 +27,7 @@
     </div>
   </div>
   <!-- video展示 -->
-  <div class="singvdo" v-else-if="data.type === 2">
+  <div class="singvdo" v-else-if="data.type === 2" @click="godetail">
     <div class="left">
       <p class="content">{{data.title}}</p>
       <div class="video">
@@ -46,7 +46,12 @@
 
 <script>
 export default {
-  props: ['data']
+  props: ['data'],
+  methods: {
+    godetail () {
+      this.$emit('click', this.data.id)
+    }
+  }
 }
 </script>
 

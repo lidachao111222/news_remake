@@ -14,6 +14,9 @@ import editprofile from '../views/EditProfile.vue'
 // 引入home页面
 import home from '../views/Home.vue'
 
+// 引入新闻详情页面
+import newsdetail from '../views/NewsDetail.vue'
+
 Vue.use(VueRouter)
 
 let router = new VueRouter({
@@ -36,6 +39,10 @@ let router = new VueRouter({
     path: '/',
     component: home,
     redirect: '/home'
+  },
+  {
+    path: '/newsdetail/:id',
+    component: newsdetail
   }]
 })
 

@@ -31,7 +31,7 @@
             :offset="50"
           >
             <!-- 自定义组件 -->
-            <eachnews v-for="item in categorylist[active].newslist" :key="item.id" :data="item"></eachnews>
+            <eachnews v-for="item in categorylist[active].newslist" :key="item.id" :data="item" @click="click"></eachnews>
           </van-list>
           </van-pull-refresh>
         </van-tab>
@@ -65,6 +65,12 @@ export default {
     }
   },
   methods: {
+    // 自定义组件的click事件
+    click (data) {
+      console.log(data)
+      router.push({ path: `/newsdetail/${data}` })
+    },
+    // 点击用户头像返回到用户也面
     gohomepage () {
       // 提取id
       let id = localStorage.getItem('user_info')
@@ -116,7 +122,7 @@ export default {
     },
     // 下拉刷新时会触发 refresh 事件
     onRefresh () {
-      console.log(123)
+      // console.log(123)
       // 把该栏的newlist清空 然后再次请求数据
       this.categorylist[this.active].newslist = []
       this.init()
