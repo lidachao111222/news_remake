@@ -1,5 +1,6 @@
 <template>
-  <div class="single">
+  <!-- 一张图片展示 -->
+  <div class="single" v-if="data.type === 1 && data.cover.length === 1 ">
     <div class="left">
       <p class="content">{{data.title}}</p>
       <p class="info">
@@ -9,11 +10,51 @@
     </div>
     <img :src="data.cover[0].url" alt />
   </div>
+  <!-- 三张图片展示 -->
+  <div class="singlet" v-else-if="data.type === 1 && data.cover.length === 3 ">
+    <div class="left">
+      <p class="content">{{data.title}}</p>
+      <div class="imgs">
+        <!-- 遍历的话更好 -->
+        <img :src="item.url" v-for="item in data.cover" :key="item.id" alt />
+        <!-- <img :src="data.cover[1].url" alt />
+        <img :src="data.cover[2].url" alt />-->
+      </div>
+      <p class="info">
+        <span>{{data.user.nickname}}</span>
+        <span>{{data.comment_length}}跟帖</span>
+      </p>
+    </div>
+  </div>
+  <!-- video展示 -->
+  <div class="singvdo" v-else-if="data.type === 2">
+    <div class="left">
+      <p class="content">{{data.title}}</p>
+      <div class="video">
+        <!-- 遍历的话更好 -->
+        <img :src="data.cover[0].url" alt />
+        <!-- <img :src="data.cover[1].url" alt />
+        <img :src="data.cover[2].url" alt />-->
+      </div>
+      <p class="info">
+        <span>{{data.user.nickname}}</span>
+        <span>{{data.comment_length}}跟帖</span>
+      </p>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  props: ['data']
+  props: ['data'],
+  mounted () {
+    console.log(this.data)
+  },
+  watch: {
+    data (nval) {
+      console.log(nval)
+    }
+  }
 }
 </script>
 
@@ -78,6 +119,54 @@ body {
     > img {
       width: 100%;
       height: 100%;
+    }
+  }
+}
+// 三个图片的样式
+.singlet {
+  padding: 15px 0px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  .imgs {
+    display: flex;
+    padding: 10px 0 0 0;
+    > img {
+      flex: 1;
+      padding: 0 5px;
+      width: 32%;
+    }
+  }
+  .info {
+    margin-top: 10px;
+    font-size: 12px;
+    padding-left: 5px;
+    color: #999;
+    > span:nth-of-type(1) {
+      padding-right: 15px;
+    }
+  }
+}
+// 视频的样式
+.singvdo {
+  padding: 15px 0px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+  .video {
+    width: 100%;
+    height: 170/360 * 100vw;
+    padding: 10px;
+    box-sizing: border-box;
+    > img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .info {
+    font-size: 12px;
+    padding-left: 5px;
+    color: #999;
+    > span:nth-of-type(1) {
+      padding-right: 15px;
     }
   }
 }
