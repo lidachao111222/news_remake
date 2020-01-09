@@ -20,7 +20,7 @@ export default {
   name: 'commentitem',
   props: ['itemparent'],
   mounted () {
-    console.log(this.itemparent)
+    // console.log(this.itemparent)
   }
 }
 </script>

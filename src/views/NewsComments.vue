@@ -12,38 +12,76 @@
           <p>{{item.user.nickname}}</p>
           <span>{{item.create_date}}</span>
         </div>
-        <span>回复</span>
+        <span @click="firstlevelreply">回复</span>
       </div>
       <!-- 子组件 -->
       <div class="text">{{item.content}}</div>
       <citem :itemparent="item.parent" v-if="item.parent"></citem>
     </div>
+    <!-- 评论 -->
+    <leavecomment :data="whicknews" @feedbacksuccess="issuccess"></leavecomment>
   </div>
 </template>
 
 <script>
-// 引入axios请求
-import { getnewscomments } from '../apis/article'
+// 引入axios请求得到所有一级评论
+// 得到是那篇新闻的数据，因为leavecomment子组件需要
+import { getnewscomments, articldetail } from '../apis/article'
 
-// 引入组件
+// 引入子组件组件(评论页面)
 import citem from '../components/CommentItem'
+
+// 引入评论组件
+import leavecomment from '../components/LeftComment'
+
 export default {
   components: {
-    citem
+    citem,
+    leavecomment
   },
   data () {
     return {
-      data: []
+      // 把所有一级评论存到data中
+      data: [],
+      // 把通过id得到是哪一篇新闻的信息存起来
+      whicknews: ''
     }
   },
   async mounted () {
+    // 通过axios请求得到所有一级评论
     // console.log(this.$route.params.id)
-    let res = await getnewscomments(this.$route.params.id, {
-      pageIndex: 1,
-      pageSize: 20
-    })
-    console.log(res)
-    this.data = res.data.data
+    // let res = await getnewscomments(this.$route.params.id, {
+    //   pageIndex: 1,
+    //   pageSize: 20
+    // })
+    // // console.log(res)
+    // this.data = res.data.data
+
+    // 得到是那篇新闻的数据，因为leavecomment子组件需要
+    let res2 = await articldetail(this.$route.params.id)
+    this.whicknews = res2.data.data
+    this.getdata()
+  },
+  methods: {
+    // 这个组件的点击回复触发事件
+    firstlevelreply () {
+      // console.log(123)
+    },
+    // 是否评论成功
+    issuccess () {
+      // console.log(3123124124)
+      // 如果成功，刷新数据
+      this.getdata()
+    },
+    // 封装得到所有评论的方法
+    async getdata () {
+      let res = await getnewscomments(this.$route.params.id, {
+        pageIndex: 1,
+        pageSize: 20
+      })
+      // console.log(res)
+      this.data = res.data.data
+    }
   }
 }
 </script>

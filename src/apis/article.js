@@ -73,3 +73,12 @@ export const getnewscomments = (id, params) => {
     params
   })
 }
+
+// 发布评论
+export const postcomment = (id, data) => {
+  return axios({
+    method: 'post',
+    url: `/post_comment/${id}`,
+    data
+  })
+}
