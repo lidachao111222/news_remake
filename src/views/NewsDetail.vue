@@ -40,13 +40,20 @@
       </div>
       <div class="more">更多跟帖</div>
     </div>
+    <!-- 底部评论 -->
+    <comment :data="data"></comment>
   </div>
 </template>
 
 <script>
 // 引入文章详情api
 import { articldetail, unfollow, follows, like } from '../apis/article'
+// 引入底部评论组件
+import comment from '../components/LeftComment'
 export default {
+  components: {
+    comment
+  },
   data () {
     return {
       data: '',
@@ -59,7 +66,7 @@ export default {
     // console.log(this.$route.params.id)
     let res = await articldetail(this.$route.params.id)
     this.data = res.data.data
-    console.log(this.data)
+    // console.log(this.data)
   },
   methods: {
     // 关注作者
@@ -85,7 +92,7 @@ export default {
     },
     // 点赞事件
     async likeit () {
-    //   console.log(this.data.has_like)
+      //   console.log(this.data.has_like)
       let res1 = await like(this.data.id)
       // console.log(res1)
       this.data.has_like = !this.data.has_like
@@ -173,7 +180,7 @@ export default {
 }
 .keeps {
   border-top: 5px solid #ddd;
-  padding: 0 15px;
+  padding: 0 15px 30px;
   > h2 {
     line-height: 50px;
     text-align: center;

@@ -42,3 +42,10 @@ export const like = (id) => {
     url: `/post_like/${id}`
   })
 }
+
+export const favouritearticle = (id) => {
+  return axios({
+    method: 'get',
+    url: `/post_star/${id}`
+  })
+}
