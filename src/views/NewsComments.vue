@@ -12,14 +12,14 @@
           <p>{{item.user.nickname}}</p>
           <span>{{item.create_date}}</span>
         </div>
-        <span @click="firstlevelreply">回复</span>
+        <span @click="firstlevelreply(item)">回复</span>
       </div>
       <!-- 子组件 -->
       <div class="text">{{item.content}}</div>
       <citem :itemparent="item.parent" v-if="item.parent"></citem>
     </div>
     <!-- 评论 -->
-    <leavecomment :data="whicknews" @feedbacksuccess="issuccess"></leavecomment>
+    <leavecomment :data="whicknews" @feedbacksuccess="issuccess" :obj="obj"  @reset='reset'></leavecomment>
   </div>
 </template>
 
@@ -44,7 +44,8 @@ export default {
       // 把所有一级评论存到data中
       data: [],
       // 把通过id得到是哪一篇新闻的信息存起来
-      whicknews: ''
+      whicknews: '',
+      obj: null
     }
   },
   async mounted () {
@@ -63,9 +64,14 @@ export default {
     this.getdata()
   },
   methods: {
+    // obj重置方法
+    reset () {
+      this.obj = null
+    },
     // 这个组件的点击回复触发事件
-    firstlevelreply () {
-      // console.log(123)
+    firstlevelreply (item) {
+      // console.log(item)
+      this.obj = item
     },
     // 是否评论成功
     issuccess () {

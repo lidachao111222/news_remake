@@ -10,7 +10,7 @@
       <i class="iconfont iconfenxiang"></i>
     </div>
     <div class="inputcomment" v-show="isFocus">
-      <textarea ref="commtext" rows="5" @blur="isFocus = false"></textarea>
+      <textarea ref="commtext" rows="5" @blur="reset"></textarea>
       <div>
         <span class="send" @mousedown="feendback">发送</span>
       </div>
@@ -25,27 +25,50 @@ import { favouritearticle, postcomment } from '../apis/article'
 // 引入router
 import router from '../ulits/router'
 export default {
-  props: ['data'],
+  props: ['data', 'obj'],
   data () {
     return {
-      isFocus: false
+      isFocus: false,
+      id: null
+    }
+  },
+  // mounted () {
+  //   console.log(this.obj)
+  // },
+  watch: {
+    obj (val) {
+      // console.log(val)
+      this.id = val.id
+      console.log(this.id)
+      this.isFocus = true
     }
   },
   methods: {
+    // 重置
+    reset () {
+      console.log(this.id)
+      this.$emit('reset')
+      this.isFocus = false
+      console.log(this.id)
+    },
     // 点击发送事件
     async feendback () {
       // 发表评论请求(文章id)
-      console.log(this.$route.params.id)
+      // console.log(this.$route.params.id)
       // 得到评论
-      console.log(this.$refs.commtext.value)
+      // console.log(this.$refs.commtext.value)
       // 发送postcomment评论
+
       let res = await postcomment(this.$route.params.id, {
         content: this.$refs.commtext.value,
-        parent_id: ''
+        parent_id: this.id
       })
       console.log(res)
       if (res.data.message === '评论发布成功') {
         this.$emit('feedbacksuccess')
+        // 重置
+        this.$refs.commtext.value = ''
+        window.scrollTo(0, 0)
       }
     },
     //   获取焦点时触发
@@ -82,9 +105,6 @@ export default {
 </script>
 
 <style lang='less' scoped>
-textarea{
-
-}
 .send{
   padding-left: 30px;
 }
