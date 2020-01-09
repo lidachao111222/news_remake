@@ -2,7 +2,7 @@
   <div class="commentApp">
     <div class="addcomment" v-show="!isFocus">
       <input type="text" placeholder="写跟帖" @focus="handlerFocus" />
-      <span class="comment">
+      <span class="comment" @click="gocomments">
         <i class="iconfont iconpinglun-"></i>
         <em>{{data.comment_length}}</em>
       </span>
@@ -20,6 +20,8 @@
 
 <script>
 import { favouritearticle } from '../apis/article'
+// 引入router
+import router from '../ulits/router'
 export default {
   props: ['data'],
   data () {
@@ -42,6 +44,9 @@ export default {
       this.$toast.success(res.data.message)
       //   改变样式
       this.data.has_star = !this.data.has_star
+    },
+    gocomments () {
+      router.push({ path: `/newscomments/${this.data.id}` })
     }
   }
 }

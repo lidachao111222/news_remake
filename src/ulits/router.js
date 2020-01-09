@@ -20,6 +20,9 @@ import newsdetail from '../views/NewsDetail.vue'
 // 引入我的收藏页面
 import myfavouruser from '../views/MyFavouriteUser.vue'
 
+// 引入精彩评论页面
+import newscomments from '../views/NewsComments.vue'
+
 Vue.use(VueRouter)
 
 let router = new VueRouter({
@@ -50,6 +53,10 @@ let router = new VueRouter({
   {
     path: '/myfavouruser/:id',
     component: myfavouruser
+  },
+  {
+    path: '/newscomments/:id',
+    component: newscomments
   }]
 })
 
