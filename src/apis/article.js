@@ -58,9 +58,18 @@ export const favouritearticle = (id) => {
 }
 
 // 用户关注的列表
-export const favouruser = (id) => {
+export const favouruser = () => {
   return axios({
     method: 'get',
     url: `/user_follows`
+  })
+}
+
+// 根据文章id得到文章对应的评论
+export const getnewscomments = (id, params) => {
+  return axios({
+    method: 'get',
+    url: `/post_comment/${id}`,
+    params
   })
 }

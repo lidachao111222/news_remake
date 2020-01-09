@@ -28,7 +28,7 @@ export default {
   // 加载页面是axios取回数据
   async mounted () {
     let res = await favouruser()
-    console.log(res)
+    // console.log(res)
     this.data = res.data.data
   }
 }
