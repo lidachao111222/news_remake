@@ -21,7 +21,7 @@ axios.interceptors.request.use(function (config) {
 
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
-  console.log(response.data.message === '用户信息验证失败')
+  // console.log(response.data.message === '用户信息验证失败')
   if (response.data.message === '用户信息验证失败') {
     router.push({ path: `/login` })
   }

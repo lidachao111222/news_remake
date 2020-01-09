@@ -17,6 +17,9 @@ import home from '../views/Home.vue'
 // 引入新闻详情页面
 import newsdetail from '../views/NewsDetail.vue'
 
+// 引入我的收藏页面
+import myfavouruser from '../views/MyFavouriteUser.vue'
+
 Vue.use(VueRouter)
 
 let router = new VueRouter({
@@ -43,6 +46,10 @@ let router = new VueRouter({
   {
     path: '/newsdetail/:id',
     component: newsdetail
+  },
+  {
+    path: '/myfavouruser/:id',
+    component: myfavouruser
   }]
 })
 

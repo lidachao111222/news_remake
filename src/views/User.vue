@@ -14,7 +14,7 @@
         <span class="iconfont iconjiantou1"></span>
       </div>
     </router-link>
-    <van-cell title="我的关注" value="关注的用户" is-link />
+    <van-cell title="我的关注" value="关注的用户" is-link @click="myfavouruser"/>
     <van-cell title="我的跟帖" value="跟帖/回复" is-link />
     <van-cell title="我的收藏" value="文章/视频" is-link />
     <van-cell title="设置" is-link />
@@ -52,6 +52,11 @@ export default {
       localStorage.removeItem('user_token')
       localStorage.removeItem('user_info')
       router.push({ path: `/home` })
+    },
+    // 我喜欢的star
+    myfavouruser () {
+      console.log(123)
+      router.push({ path: `/myfavouruser/${this.$route.params.id}` })
     }
   }
 }
