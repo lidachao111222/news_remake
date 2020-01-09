@@ -15,8 +15,8 @@
         <span>回复</span>
       </div>
       <!-- 子组件 -->
-      <citem :itemparent="item.parent" v-if="item.parent"></citem>
       <div class="text">{{item.content}}</div>
+      <citem :itemparent="item.parent" v-if="item.parent"></citem>
     </div>
   </div>
 </template>

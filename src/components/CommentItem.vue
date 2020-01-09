@@ -1,6 +1,6 @@
 <template>
   <!-- 评论页面单层 -->
-  <div class="item1" v-if="itemparent.user !== null ">
+  <div class="item1">
     <div class="head">
       <img :src="'http://127.0.0.1:3000'+itemparent.user.head_img" alt />
       <div>
@@ -10,11 +10,14 @@
       </div>
       <span>回复</span>
     </div>
+     <commentitem :itemparent="itemparent.parent" v-if="itemparent.parent"></commentitem>
   </div>
 </template>
 
 <script>
+// import commentitem from '../components/CommentItem'
 export default {
+  name: 'commentitem',
   props: ['itemparent'],
   mounted () {
     console.log(this.itemparent)
