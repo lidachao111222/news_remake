@@ -90,6 +90,7 @@ export default {
         this.$toast('刷新成功')
         this.categorylist[this.active].isLoading = false
         this.categorylist[this.active].pageIndex = 1
+        this.categorylist[this.active].finished = false
       }
       // 发送axios请求得到文章列表
       let res1 = await articlelist({
