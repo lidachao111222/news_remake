@@ -14,25 +14,30 @@
       </div>
     </div>
     <!-- 标签页 -->
-    <van-icon name="plus" class="plus" @click="channel"/>
+    <van-icon name="plus" class="plus" @click="channel" />
     <div class="nav">
       <!-- 顶部tab栏 -->
       <van-tabs v-model="active" swipeable sticky>
         <van-tab :title="item.name" v-for="item in categorylist" :key="item.id">
           <!-- PullRefresh 下拉刷新组件 -->
           <van-pull-refresh v-model="categorylist[active].isLoading" @refresh="onRefresh">
-          <!-- List 列表 -->
-          <van-list
-            v-model="categorylist[active].loading"
-            :finished="categorylist[active].finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-            :immediate-check="false"
-            :offset="50"
-          >
-            <!-- 自定义组件 -->
-            <eachnews v-for="item in categorylist[active].newslist" :key="item.id" :data="item" @click="click"></eachnews>
-          </van-list>
+            <!-- List 列表 -->
+            <van-list
+              v-model="categorylist[active].loading"
+              :finished="categorylist[active].finished"
+              finished-text="没有更多了"
+              @load="onLoad"
+              :immediate-check="false"
+              :offset="50"
+            >
+              <!-- 自定义组件 -->
+              <eachnews
+                v-for="item in categorylist[active].newslist"
+                :key="item.id"
+                :data="item"
+                @click="click"
+              ></eachnews>
+            </van-list>
           </van-pull-refresh>
         </van-tab>
       </van-tabs>
@@ -134,11 +139,30 @@ export default {
     }
   },
   async mounted () {
-    // 页面一加载的时候，进行axios数据请求，得到栏目列表并对回传的数据进行改造
-    let res = await category()
-    // 取回栏目列表数据，并且准备渲染
-    this.categorylist = res.data.data
-    // console.log(this.categorylist)
+    // 判断本地存储是否有likelist，有就把它赋值回去； 没有list 则要从服务器取值，
+    if (!localStorage.getItem('likelist')) {
+      // 页面一加载的时候，进行axios数据请求，得到栏目列表并对回传的数据进行改造
+      let res = await category()
+      // 取回栏目列表数据，并且准备渲染
+      this.categorylist = res.data.data
+      console.log(this.categorylist)
+    } else {
+      this.categorylist = JSON.parse(localStorage.getItem('likelist'))
+      this.categorylist.unshift(
+        {
+          id: 0,
+          name: '关注',
+          is_top: 1,
+          create_date: '2019-10-15T07:20:47.000Z'
+        },
+        {
+          id: 999,
+          name: '头条',
+          is_top: 1,
+          create_date: '2019-10-15T07:20:47.000Z'
+        }
+      )
+    }
     // 重新改造categorylist
     this.categorylist = this.categorylist.map(element => {
       return {
@@ -202,11 +226,11 @@ export default {
     padding: 0 10px;
   }
 }
-.plus{
+.plus {
   margin-top: 5px;
   font-size: 30px;
   position: -webkit-sticky;
-  float:right;
+  float: right;
   position: sticky;
   top: 0;
   z-index: 1000;

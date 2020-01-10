@@ -32,8 +32,7 @@ import { category } from '../apis/article'
 export default {
   data () {
     return {
-      likelist: [
-      ],
+      likelist: [],
       addlist: []
     }
   },
@@ -45,22 +44,29 @@ export default {
     // 移除栏目方法
     remove (index) {
       // 得到序号
-      console.log(index)
+      //   console.log(index)
       // 添加数据到addlist中
       this.addlist.unshift(this.likelist[index])
       // 移除likelist的数据
       this.likelist.splice(index, 1)
-
+      //   console.log(this.likelist)
+      //   console.log(this.addlist)
       this.$notify('移除成功')
+      // 把值存到localstorage中
+      localStorage.setItem('likelist', JSON.stringify(this.likelist))
+      localStorage.setItem('addlist', JSON.stringify(this.addlist))
     },
     // 添加栏目方法
     add (index) {
       // 得到序号
-      console.log(index)
+      //   console.log(index)
       // 添加数据到likelist中
       this.likelist.unshift(this.addlist[index])
       // 移除addlist的数据
       this.addlist.splice(index, 1)
+      // 把值存到localstorage中
+      localStorage.setItem('likelist', JSON.stringify(this.likelist))
+      localStorage.setItem('addlist', JSON.stringify(this.addlist))
       this.$notify({
         message: '添加成功',
         type: 'success'
@@ -69,16 +75,23 @@ export default {
   },
   //  axios请求数据栏目列表
   async mounted () {
-    let res = await category()
-    console.log(res)
-    // 判断。如果有token 则去掉头两个信息
-    if (localStorage.getItem('user_token')) {
-      this.likelist = res.data.data
-      this.likelist.splice(0, 2)
+    // 判断时是否需要从服务器取值，没有list 则取 有则不请求
+    console.log(localStorage.getItem('likelist'))
+    if (!localStorage.getItem('likelist')) {
+      let res = await category()
+      console.log(res)
+      // 判断。如果有token 则去掉头两个信息
+      if (localStorage.getItem('user_token')) {
+        this.likelist = res.data.data
+        this.likelist.splice(0, 2)
+      } else {
+        // 否则没有token值，去掉头一个信息
+        this.likelist = res.data.data
+        this.likelist.splice(0, 1)
+      }
     } else {
-    // 否则没有token值，去掉头一个信息
-      this.likelist = res.data.data
-      this.likelist.splice(0, 1)
+      this.likelist = JSON.parse(localStorage.getItem('likelist'))
+      this.addlist = JSON.parse(localStorage.getItem('addlist'))
     }
   }
 }
