@@ -14,11 +14,11 @@
       </div>
     </div>
     <!-- 标签页 -->
+    <van-icon name="plus" class="plus"/>
     <div class="nav">
       <!-- 顶部tab栏 -->
       <van-tabs v-model="active" swipeable sticky>
         <van-tab :title="item.name" v-for="item in categorylist" :key="item.id">
-
           <!-- PullRefresh 下拉刷新组件 -->
           <van-pull-refresh v-model="categorylist[active].isLoading" @refresh="onRefresh">
           <!-- List 列表 -->
@@ -197,5 +197,15 @@ export default {
     font-size: 25px;
     padding: 0 10px;
   }
+}
+.plus{
+  margin-top: 5px;
+  font-size: 30px;
+  position: -webkit-sticky;
+  float:right;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
 }
 </style>
