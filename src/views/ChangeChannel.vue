@@ -33,13 +33,8 @@ export default {
   data () {
     return {
       likelist: [
-        { id: 1, name: '新闻' },
-        { id: 2, name: '娱乐' },
-        { id: 3, name: '体育' },
-        { id: 4, name: '财经' },
-        { id: 5, name: '科技' }
       ],
-      addlist: [{ id: 1, name: '段子' }]
+      addlist: []
     }
   },
   methods: {
@@ -78,9 +73,12 @@ export default {
     console.log(res)
     // 判断。如果有token 则去掉头两个信息
     if (localStorage.getItem('user_token')) {
-
+      this.likelist = res.data.data
+      this.likelist.splice(0, 2)
     } else {
     // 否则没有token值，去掉头一个信息
+      this.likelist = res.data.data
+      this.likelist.splice(0, 1)
     }
   }
 }
