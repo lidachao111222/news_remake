@@ -16,10 +16,10 @@
       </div>
       <!-- 子组件 -->
       <div class="text">{{item.content}}</div>
-      <citem :itemparent="item.parent" v-if="item.parent"></citem>
+      <citem :itemparent="item.parent" v-if="item.parent" @secondfeendback="getsecondfeendback"></citem>
     </div>
     <!-- 评论 -->
-    <leavecomment :data="whicknews" @feedbacksuccess="issuccess" :obj="obj"  @reset='reset'></leavecomment>
+    <leavecomment :data="whicknews" @feedbacksuccess="issuccess" :obj="obj"  @reset='reset' ></leavecomment>
   </div>
 </template>
 
@@ -64,13 +64,18 @@ export default {
     this.getdata()
   },
   methods: {
+    // secondeFeedback
+    getsecondfeendback (itemparent) {
+      console.log(itemparent)
+      this.obj = itemparent
+    },
     // obj重置方法
     reset () {
       this.obj = null
     },
     // 这个组件的点击回复触发事件
     firstlevelreply (item) {
-      // console.log(item)
+      console.log(item)
       this.obj = item
     },
     // 是否评论成功

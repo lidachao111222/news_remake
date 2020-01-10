@@ -8,9 +8,9 @@
         <span>{{itemparent.create_date}}</span>
         <div class="text">{{itemparent.content}}</div>
       </div>
-      <span>回复</span>
+      <span @click="sendfeedback(itemparent)">回复</span>
     </div>
-     <commentitem :itemparent="itemparent.parent" v-if="itemparent.parent"></commentitem>
+     <commentitem :itemparent="itemparent.parent" v-if="itemparent.parent" @secondfeendback="sendfeedback"></commentitem>
   </div>
 </template>
 
@@ -21,6 +21,13 @@ export default {
   props: ['itemparent'],
   mounted () {
     // console.log(this.itemparent)
+  },
+  methods: {
+    sendfeedback (itemparent) {
+      console.log(itemparent)
+      // 把这个评论的对象传到父组件中
+      this.$emit('secondfeendback', itemparent)
+    }
   }
 }
 </script>
