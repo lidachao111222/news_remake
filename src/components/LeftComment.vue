@@ -37,9 +37,13 @@ export default {
   // },
   watch: {
     obj (val) {
-      // console.log(val)
-      this.id = val.id
-      console.log(this.id)
+      // console.log(val.id)
+      // val有值才去取id， 但是不行
+      if (val) {
+        // console.log(val.id)
+        this.id = val.id
+      }
+      // console.log(this.id)
       this.isFocus = true
       setTimeout(() => {
         this.$refs.commtext.focus()
@@ -49,10 +53,10 @@ export default {
   methods: {
     // 重置
     reset () {
-      console.log(this.id)
+      this.id = null
+      // console.log(this.id)
       this.$emit('reset')
       this.isFocus = false
-      console.log(this.id)
     },
     // 点击发送事件
     async feendback () {
