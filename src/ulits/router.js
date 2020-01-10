@@ -23,12 +23,18 @@ import myfavouruser from '../views/MyFavouriteUser.vue'
 // 引入精彩评论页面
 import newscomments from '../views/NewsComments.vue'
 
+// 引入栏目管理页面
+import changchannel from '../views/ChangeChannel.vue'
+
 Vue.use(VueRouter)
 
 let router = new VueRouter({
   routes: [{
     path: '/login',
     component: login
+  }, {
+    path: '/changchannel',
+    component: changchannel
   }, {
     path: '/register',
     component: register

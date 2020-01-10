@@ -14,7 +14,7 @@
       </div>
     </div>
     <!-- 标签页 -->
-    <van-icon name="plus" class="plus"/>
+    <van-icon name="plus" class="plus" @click="channel"/>
     <div class="nav">
       <!-- 顶部tab栏 -->
       <van-tabs v-model="active" swipeable sticky>
@@ -65,6 +65,10 @@ export default {
     }
   },
   methods: {
+    channel () {
+      console.log(123)
+      router.push({ path: `/changchannel` })
+    },
     // 自定义组件的click事件
     click (data) {
       // console.log(data)
