@@ -41,6 +41,9 @@ export default {
       this.id = val.id
       console.log(this.id)
       this.isFocus = true
+      setTimeout(() => {
+        this.$refs.commtext.focus()
+      }, 1)
     }
   },
   methods: {
