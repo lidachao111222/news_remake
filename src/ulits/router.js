@@ -26,6 +26,9 @@ import newscomments from '../views/NewsComments.vue'
 // 引入栏目管理页面
 import changchannel from '../views/ChangeChannel.vue'
 
+// 引入搜索页面
+import Search from '../views/Search.vue'
+
 Vue.use(VueRouter)
 
 let router = new VueRouter({
@@ -35,6 +38,9 @@ let router = new VueRouter({
   }, {
     path: '/changchannel',
     component: changchannel
+  }, {
+    path: '/search',
+    component: Search
   }, {
     path: '/register',
     component: register

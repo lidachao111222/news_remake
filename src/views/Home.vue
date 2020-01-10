@@ -5,7 +5,7 @@
       <div class="logo">
         <span class="iconfont iconnew"></span>
       </div>
-      <div class="search">
+      <div class="search" @click="search">
         <van-icon name="search" />
         <span>搜索商品</span>
       </div>
@@ -70,6 +70,10 @@ export default {
     }
   },
   methods: {
+    search () {
+      console.log(123)
+      router.push({ path: `/search` })
+    },
     channel () {
       console.log(123)
       router.push({ path: `/changchannel` })
