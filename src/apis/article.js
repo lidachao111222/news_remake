@@ -82,3 +82,12 @@ export const postcomment = (id, data) => {
     data
   })
 }
+
+// 搜索文章
+export const postsearch = (params) => {
+  return axios({
+    method: 'get',
+    url: `/post_search`,
+    params
+  })
+}

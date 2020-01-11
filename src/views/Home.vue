@@ -42,8 +42,6 @@
         </van-tab>
       </van-tabs>
     </div>
-    <!-- 新闻列表 -->
-    <div class="newsList"></div>
   </div>
 </template>
 
@@ -233,7 +231,7 @@ export default {
 .plus {
   margin-top: 5px;
   font-size: 30px;
-  position: -webkit-sticky;
+  // position: -webkit-sticky;
   float: right;
   position: sticky;
   top: 0;

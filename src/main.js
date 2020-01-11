@@ -23,10 +23,12 @@ import {
   Tabs,
   List,
   PullRefresh,
-  Notify
+  Notify,
+  Search,
+  Pagination
 } from 'vant'
 
-Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader).use(Dialog).use(Picker).use(Icon).use(Tab).use(Tabs).use(List).use(PullRefresh).use(Notify)
+Vue.use(Button).use(Field).use(Toast).use(Cell).use(CellGroup).use(NavBar).use(Uploader).use(Dialog).use(Picker).use(Icon).use(Tab).use(Tabs).use(List).use(PullRefresh).use(Notify).use(Search).use(Pagination)
 
 Vue.config.productionTip = false
 
